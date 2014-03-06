@@ -17,7 +17,7 @@ ST_DB_HOST=ci.scootertutor.com
 ST_DB_USER=st_user
 ST_DB_PWD=4JgyrVAg
 ST_DB_NAME=moodle
-ST_DB_REPO=/opt/apps/st-moodledb/
+ST_DB_REPO=/opt/apps/k-moodledb/
 ST_DB_BACKUP_FILENAME=st-moodle-db-schema.sql
 ST_DATE=$(date)
 

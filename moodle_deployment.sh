@@ -26,21 +26,21 @@ ARTIFACTS_DIR=/opt/apps/deploy/
 # function for granting privileges to moodle code directory
 function grantAccessToMoodle {
 	echo "INFO: Granting privileges to moodle"
-	chown -R root ${ST_MOODLE_LOC}
-	chmod -R 0755 ${ST_MOODLE_LOC}
+	sudo chmod -R root:root ${ST_MOODLE_LOC}
+	sudo chmod -R 0755 ${ST_MOODLE_LOC}
 	echo "INFO: All required privileges granted to moodle"
 }
 
 # function for granting privileges to moodle data directory
 function grantAccessToMoodleData {
 	echo "INFO: Granting privileges to moodledata"
-	chmod -R 0777 ${ST_MOODLE_DATA_LOC}
-	sudo chown -R www-data:www-data ${ST_MOODLE_DATA_LOC}
+	sudo chmod -R 0777 ${ST_MOODLE_DATA_LOC}
+	sudo chmod -R www-data:root ${ST_MOODLE_DATA_LOC}
 	echo "INFO: All required privileges granted to moodledata"
 }
 
 echo "*****************************************************************************************"
-echo "                           Deploying Kno-Demy Moodle ...                            "
+echo "                           Deploying Kno-Demy Moodle ...                                 "
 echo "*****************************************************************************************"
 echo "-----------------------------------------------------------------------------------------"
 echo "                         Initiated moodle code deployment...                             "
@@ -71,7 +71,7 @@ cd ${ARTIFACTS_DIR}
 echo "INFO: Deployable artifacts directory: $ARTIFACTS_DIR"
 
 echo "INFO: verifying if new deployable moodle artifact exists"
-ST_MOODLE_WEB_ARTIFACT_FILE=`ls -tr | grep st-moodle-web*zip`
+ST_MOODLE_WEB_ARTIFACT_FILE=`ls -tr | grep k-moodle-web*zip`
 
 if [[ ! -f ${ST_MOODLE_WEB_ARTIFACT_FILE} ]]; then
     echo "ERROR: The deployable moodle artifact file does not exist for deployment, did jenkins deploy this file?"
@@ -131,7 +131,7 @@ cd ${ARTIFACTS_DIR}
 echo "INFO: Deployable artifacts directory: $ARTIFACTS_DIR"
 
 echo "INFO: verifying if new deployable moodledata artifact exists"
-ST_MOODLE_DATA_WEB_ARTIFACT_FILE=`ls -tr | grep st-moodle-data*zip`
+ST_MOODLE_DATA_WEB_ARTIFACT_FILE=`ls -tr | grep k-moodle-data*zip`
 
 if [[ ! -f ${ST_MOODLE_DATA_WEB_ARTIFACT_FILE} ]]; then
     echo "ERROR: The deployable moodledata artifact file does not exist for deployment, did jenkins deploy this file?"
@@ -164,5 +164,5 @@ echo "--------------------------------------------------------------------------
 echo "                       moodledata deployment completed!                                  "
 echo "-----------------------------------------------------------------------------------------"
 echo "*****************************************************************************************"
-echo "                 Kno-Demy deployment Completed successfully                         "
+echo "                 Kno-Demy deployment Completed successfully                              "
 echo "*****************************************************************************************"

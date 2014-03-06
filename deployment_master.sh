@@ -21,9 +21,9 @@ if [[ ${DEPLOYMENT_SOURCE} == "Direct URLs" ]]
 
 elif [[ ${DEPLOYMENT_SOURCE} == "Nexus repo" ]]
 	then
-	MOODLE_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.scootertutor.moodle&a=st-moodle-web&v=${MOODLE_ARTIFACT_VERSION}&e=zip"
-	MOODLE_DATA_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.scootertutor.moodledata&a=st-moodle-data&v=${MOODLE_DATA_ARTIFACT_VERSION}&e=zip"
-	MOODLE_DB_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.scootertutor.moodledb&a=st-moodle-db&v=${MOODLE_DB_ARTIFACT_VERSION}&e=zip"
+	MOODLE_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodle&a=k-moodle-web&v=${MOODLE_ARTIFACT_VERSION}&e=zip"
+	MOODLE_DATA_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledata&a=k-moodle-data&v=${MOODLE_DATA_ARTIFACT_VERSION}&e=zip"
+	MOODLE_DB_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledb&a=k-moodle-db&v=${MOODLE_DB_ARTIFACT_VERSION}&e=zip"
 
 elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 	then
@@ -43,7 +43,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 	fi
 	MOODLE_BUILD_ID_OUT=`mktemp`
 	curl -s ${MOODLE_ARTIFACT_JOB}/${MOODLE_BUILD_ID}/consoleText > ${MOODLE_BUILD_ID_OUT}
-	MOODLE_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/st-moodle-web-(.*).zip" ${MOODLE_BUILD_ID_OUT} | awk '{ print $2 };'`
+	MOODLE_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/k-moodle-web-(.*).zip" ${MOODLE_BUILD_ID_OUT} | awk '{ print $2 };'`
 
 	if [[ ${MOODLE_DATA_ARTIFACT_JOB_BUILD} == "LAST" ]]
 		then
@@ -61,7 +61,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 	
 	MOODLE_DATA_BUILD_ID_OUT=`mktemp`
 	curl -s ${MOODLE_DATA_ARTIFACT_JOB}/${MOODLE_DATA_BUILD_ID}/consoleText > ${MOODLE_DATA_BUILD_ID_OUT}
-	MOODLE_DATA_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/st-moodle-data-(.*).zip" ${MOODLE_DATA_BUILD_ID_OUT} | awk '{ print $2 };'`
+	MOODLE_DATA_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/k-moodle-data-(.*).zip" ${MOODLE_DATA_BUILD_ID_OUT} | awk '{ print $2 };'`
 	
 	if [[ ${MOODLE_DB_JOB_BUILD} == "LAST" ]]
 		then
@@ -78,7 +78,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 	fi
 	MOODLE_DB_BUILD_ID_OUT=`mktemp`
 	curl -s ${MOODLE_DB_ARTIFACT_JOB}/${MOODLE_DB_BUILD_ID}/consoleText > ${MOODLE_DB_BUILD_ID_OUT}
-	MOODLE_DB_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/st-moodle-db-(.*).zip" ${MOODLE_DB_BUILD_ID_OUT} | awk '{ print $2 };'`
+	MOODLE_DB_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/k-moodle-db-(.*).zip" ${MOODLE_DB_BUILD_ID_OUT} | awk '{ print $2 };'`
 	
 else
 	echo "Unknown artifacts deployment source specified"
