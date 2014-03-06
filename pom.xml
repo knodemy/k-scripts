@@ -10,7 +10,7 @@
 	</parent>
 
 	<groupId>com.knodemy.scripts</groupId>
-	<artifactId>k-moodle-db</artifactId>
+	<artifactId>k-scripts</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Kno-Demy Scripts:: ${project.artifactId}</name>
