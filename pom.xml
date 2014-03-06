@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.knodemy</groupId>
+		<artifactId>k-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<groupId>com.knodemy.scripts</groupId>
+	<artifactId>k-moodle-db</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>Kno-Demy Scripts:: ${project.artifactId}</name>
+	<description>knodemy shell scripts packaging</description>
+
+	<!-- Make sure this section is updated when you branch the project for parallel 
+		development -->
+
+	<scm>
+		<connection>scm:git:ssh://git@github.com:knodemy/k-scripts.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:knodemy/k-scripts.git</developerConnection>
+		<url>ssh://git@github.com:knodemy/k-scripts.git</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<ciManagement>
+		<system>Jenkins</system>
+		<url>http://ci.scootertutor:8080/</url>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<sendOnError>true</sendOnError>
+				<sendOnFailure>true</sendOnFailure>
+				<sendOnSuccess>false</sendOnSuccess>
+				<sendOnWarning>false</sendOnWarning>
+				<configuration>
+					<address>ci@scootertutor.com</address>
+				</configuration>
+			</notifier>
+		</notifiers>
+	</ciManagement>
+
+	<developers>
+		<developer>
+			<id />
+			<name>Kiran Dharmavarapu</name>
+			<email>kiran@scootertutor.com</email>
+			<roles>
+				<role>Advisor</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-k-scripts-zip</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>/build/k_scripts_assembly.xml</descriptor>
+							</descriptors>
+							<appendAssemblyId>false</appendAssemblyId>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
