@@ -41,7 +41,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 			exit 13
 		fi
 	fi
-	MOODLE_BUILD_ID_OUT=`mktemp`
+	MOODLE_BUILD_ID_OUT='/tmp/'
 	curl -s ${MOODLE_ARTIFACT_JOB}/${MOODLE_BUILD_ID}/consoleText > ${MOODLE_BUILD_ID_OUT}
 	MOODLE_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/k-moodle-web-(.*).zip" ${MOODLE_BUILD_ID_OUT} | awk '{ print $2 };'`
 
@@ -59,7 +59,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 		fi
 	fi
 	
-	MOODLE_DATA_BUILD_ID_OUT=`mktemp`
+	MOODLE_DATA_BUILD_ID_OUT='/tmp/'
 	curl -s ${MOODLE_DATA_ARTIFACT_JOB}/${MOODLE_DATA_BUILD_ID}/consoleText > ${MOODLE_DATA_BUILD_ID_OUT}
 	MOODLE_DATA_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/k-moodle-data-(.*).zip" ${MOODLE_DATA_BUILD_ID_OUT} | awk '{ print $2 };'`
 	
@@ -76,7 +76,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 			exit 13
 		fi
 	fi
-	MOODLE_DB_BUILD_ID_OUT=`mktemp`
+	MOODLE_DB_BUILD_ID_OUT='/tmp/'
 	curl -s ${MOODLE_DB_ARTIFACT_JOB}/${MOODLE_DB_BUILD_ID}/consoleText > ${MOODLE_DB_BUILD_ID_OUT}
 	MOODLE_DB_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/k-moodle-db-(.*).zip" ${MOODLE_DB_BUILD_ID_OUT} | awk '{ print $2 };'`
 	
@@ -94,7 +94,7 @@ MOODLE_DB_ARTIFACT_URL_ESC=`echo ${MOODLE_DB_ARTIFACT_URL} | sed -e 's,\/,\\\/,g
 
 echo "Verifying URLs"
 
-MOODLE_CURL_TMP=`mktemp`
+MOODLE_CURL_TMP='/tmp/'
 curl -s -L -I "${MOODLE_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
 { grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "MOODLE_ARTIFACT_URL is invalid"; exit 13; }
 curl -s -L -I "${MOODLE_DATA_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
