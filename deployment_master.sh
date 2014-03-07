@@ -21,9 +21,9 @@ if [[ ${DEPLOYMENT_SOURCE} == "Direct URLs" ]]
 
 elif [[ ${DEPLOYMENT_SOURCE} == "Nexus repo" ]]
 	then
-	MOODLE_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodle&a=k-moodle-web&v=${MOODLE_ARTIFACT_VERSION}&e=zip"
-	MOODLE_DATA_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledata&a=k-moodle-data&v=${MOODLE_DATA_ARTIFACT_VERSION}&e=zip"
-	MOODLE_DB_ARTIFACT_URL="http://ci.scootertutor.com:9000/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledb&a=k-moodle-db&v=${MOODLE_DB_ARTIFACT_VERSION}&e=zip"
+	MOODLE_ARTIFACT_URL="http://ci.scootertutor.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodle&a=k-moodle-web&v=${MOODLE_ARTIFACT_VERSION}&e=zip"
+	MOODLE_DATA_ARTIFACT_URL="http://ci.scootertutor.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledata&a=k-moodle-data&v=${MOODLE_DATA_ARTIFACT_VERSION}&e=zip"
+	MOODLE_DB_ARTIFACT_URL="http://ci.scootertutor.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledb&a=k-moodle-db&v=${MOODLE_DB_ARTIFACT_VERSION}&e=zip"
 
 elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 	then
