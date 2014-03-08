@@ -107,10 +107,11 @@ ls -l
 cd /opt/apps/
 rm -rf deploy
 mkdir deploy 
+cd /opt/apps/deploy/
 pwd
-wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_ARTIFACT_URL}
-wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_DATA_ARTIFACT_URL}
-wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_DB_ARTIFACT_URL}
+wget --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
+wget --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
+wget --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
 pwd
 ls -l
 #scp ubuntu
