@@ -105,10 +105,15 @@ curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_DB_ARTIFACT_URL}" > ${MOODLE_CUR
 pwd
 ls -l
 cd /opt/apps/
-sudo wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_ARTIFACT_URL}
-sudo wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_DATA_ARTIFACT_URL}
-sudo wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_DB_ARTIFACT_URL}
-scp ubuntu
+rm -rf deploy
+mkdir deploy 
+pwd
+wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_ARTIFACT_URL}
+wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_DATA_ARTIFACT_URL}
+wget --http-user=stdeploy --http-passwd=stdeploy123 ${MOODLE_DB_ARTIFACT_URL}
+pwd
+ls -l
+#scp ubuntu
 
 #rm -f ${MOODLE_CURL_TMP} ${MOODLE_DB_BUILD_ID_OUT} ${MOODLE_DATA_BUILD_ID_OUT} ${MOODLE_BUILD_ID_OUT}
 
