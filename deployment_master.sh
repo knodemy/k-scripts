@@ -95,11 +95,11 @@ MOODLE_DB_ARTIFACT_URL_ESC=`echo ${MOODLE_DB_ARTIFACT_URL} | sed -e 's,\/,\\\/,g
 echo "Verifying URLs"
 
 MOODLE_CURL_TMP='mktemp'
-curl -s -L -I "${MOODLE_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
+curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
 { grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "MOODLE_ARTIFACT_URL is invalid"; exit 13; }
-curl -s -L -I "${MOODLE_DATA_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
+curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
 { grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "MOODLE_DATA_ARTIFACT_URL is invalid"; exit 13; }
-curl -s -L -I "${MOODLE_DB_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
+curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_DB_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
 { grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "MOODLE_DB_ARTIFACT_URL is invalid"; exit 13; }
 
 rm -f ${MOODLE_CURL_TMP} ${MOODLE_DB_BUILD_ID_OUT} ${MOODLE_DATA_BUILD_ID_OUT} ${MOODLE_BUILD_ID_OUT}
