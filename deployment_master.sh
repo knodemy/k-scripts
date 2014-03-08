@@ -90,8 +90,6 @@ MOODLE_ARTIFACT_URL_ESC=`echo ${MOODLE_ARTIFACT_URL} | sed -e 's,\/,\\\/,g' -e '
 MOODLE_DATA_ARTIFACT_URL_ESC=`echo ${MOODLE_DATA_ARTIFACT_URL} | sed -e 's,\/,\\\/,g' -e 's,\&,\\\&,g'`
 MOODLE_DB_ARTIFACT_URL_ESC=`echo ${MOODLE_DB_ARTIFACT_URL} | sed -e 's,\/,\\\/,g' -e 's,\&,\\\&,g'`
 
-#cat oes_${HOST}.json | sed -e "s/#moodle_download_url#/${MOODLE_ARTIFACT_URL_ESC}/" -e "s/#moodle_data_download_url#/${MOODLE_DATA_ARTIFACT_URL_ESC}/" -e "s/#moodle_db_download_url#/${MOODLE_DB_ARTIFACT_URL_ESC}/" -e "s/#apps_only#/${REDEPLOY_APPS_ONLY}/" > local.json
-
 echo "Verifying URLs"
 
 MOODLE_CURL_TMP='mktemp'
@@ -102,21 +100,20 @@ curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}" > ${MOODLE_C
 curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_DB_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
 { grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "MOODLE_DB_ARTIFACT_URL is invalid"; exit 13; }
 
-pwd
-ls -l
+rm -f ${MOODLE_CURL_TMP} ${MOODLE_DB_BUILD_ID_OUT} ${MOODLE_DATA_BUILD_ID_OUT} ${MOODLE_BUILD_ID_OUT}
+
 cd /opt/apps/
 rm -rf deploy
 mkdir deploy 
 cd /opt/apps/deploy/
-pwd
+
 wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
 wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
 wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
-pwd
-ls -l
-#scp ubuntu
 
-#rm -f ${MOODLE_CURL_TMP} ${MOODLE_DB_BUILD_ID_OUT} ${MOODLE_DATA_BUILD_ID_OUT} ${MOODLE_BUILD_ID_OUT}
+echo ${ENVIRONMENT_HOST}
+scp -r /opt/apps/deploy jenkins@${ENVIRONMENT_HOST}:/opt/apps
+
 
 #tar cz . | $SSH_COMMAND $HOST 'tar xz && { pgrep chef-solo > /dev/null && echo "Deployment is already in progress, exiting." && exit 1 ;} || { echo "Starting deployment." && exec sh -xv ./deploy.sh ;}'
 
