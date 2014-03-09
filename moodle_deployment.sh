@@ -26,7 +26,7 @@ ARTIFACTS_DIR=/opt/apps/deploy/
 # function for granting privileges to moodle code directory
 function grantAccessToMoodle {
 	echo "INFO: Granting privileges to moodle"
-	sudo chown -R root ${ST_MOODLE_LOC}
+	sudo chown -R root:root ${ST_MOODLE_LOC}
 	sudo chmod -R 0755 ${ST_MOODLE_LOC}
 	echo "INFO: All required privileges granted to moodle"
 }
@@ -35,7 +35,7 @@ function grantAccessToMoodle {
 function grantAccessToMoodleData {
 	echo "INFO: Granting privileges to moodledata"
 	sudo chmod -R 0777 ${ST_MOODLE_DATA_LOC}
-	sudo chmod -R www-data:root ${ST_MOODLE_DATA_LOC}
+	sudo chown -R www-data:root ${ST_MOODLE_DATA_LOC}
 	echo "INFO: All required privileges granted to moodledata"
 }
 

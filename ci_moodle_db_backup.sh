@@ -13,7 +13,7 @@
 
 # Declare variables
 
-ST_DB_HOST=ci.scootertutor.com
+ST_DB_HOST=ci.knodemy.com
 ST_DB_USER=st_user
 ST_DB_PWD=4JgyrVAg
 ST_DB_NAME=moodle

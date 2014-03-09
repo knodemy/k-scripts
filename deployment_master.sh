@@ -21,9 +21,9 @@ if [[ ${DEPLOYMENT_SOURCE} == "Direct URLs" ]]
 
 elif [[ ${DEPLOYMENT_SOURCE} == "Nexus repo" ]]
 	then
-	MOODLE_ARTIFACT_URL="http://ci.scootertutor.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodle&a=k-moodle-web&v=${MOODLE_ARTIFACT_VERSION}&e=zip"
-	MOODLE_DATA_ARTIFACT_URL="http://ci.scootertutor.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledata&a=k-moodle-data&v=${MOODLE_DATA_ARTIFACT_VERSION}&e=zip"
-	MOODLE_DB_ARTIFACT_URL="http://ci.scootertutor.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledb&a=k-moodle-db&v=${MOODLE_DB_ARTIFACT_VERSION}&e=zip"
+	MOODLE_ARTIFACT_URL="http://ci.knodemy.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodle&a=k-moodle-web&v=${MOODLE_ARTIFACT_VERSION}&e=zip"
+	MOODLE_DATA_ARTIFACT_URL="http://ci.knodemy.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledata&a=k-moodle-data&v=${MOODLE_DATA_ARTIFACT_VERSION}&e=zip"
+	MOODLE_DB_ARTIFACT_URL="http://ci.knodemy.com:8081/nexus/service/local/artifact/maven/redirect?r=${NEXUS_ARTIFACTS_REPO}&g=com.knodemy.moodledb&a=k-moodle-db&v=${MOODLE_DB_ARTIFACT_VERSION}&e=zip"
 
 elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 	then
@@ -112,7 +112,8 @@ wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOO
 wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
 
 echo ${ENVIRONMENT_HOST}
-scp -r /opt/apps/deploy jenkins@${ENVIRONMENT_HOST}:/opt/apps
+
+scp -i /var/lib/jenkins/.ssh/deploy_rsa -r /opt/apps/deploy ubuntu@${ENVIRONMENT_HOST}:/opt/apps
 
 
 #tar cz . | $SSH_COMMAND $HOST 'tar xz && { pgrep chef-solo > /dev/null && echo "Deployment is already in progress, exiting." && exit 1 ;} || { echo "Starting deployment." && exec sh -xv ./deploy.sh ;}'
