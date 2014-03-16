@@ -14,6 +14,7 @@
 
 # Declare variables
 
+HOST=$1
 ST_MOODLE_LOC=/var/www/moodle
 ST_MOODLE_LOC_BAK=/var/www/moodle_bak
 ST_NEW_MOODLE_LOC=/var/www
