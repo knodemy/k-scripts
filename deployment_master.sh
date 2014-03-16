@@ -115,8 +115,4 @@ echo ${ENVIRONMENT_HOST}
 
 scp -i /var/lib/jenkins/.ssh/deploy_rsa -r /opt/apps/deploy ubuntu@${ENVIRONMENT_HOST}:/opt/apps
 
-
-#tar cz . | $SSH_COMMAND $HOST 'tar xz && { pgrep chef-solo > /dev/null && echo "Deployment is already in progress, exiting." && exit 1 ;} || { echo "Starting deployment." && exec sh -xv ./deploy.sh ;}'
-
-	
 	
