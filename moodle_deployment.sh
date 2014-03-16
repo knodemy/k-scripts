@@ -205,6 +205,9 @@ function deployMoodledb {
 	mysql -v -u root -proot moodle < st-moodle-db-schema.sql
 	echo "INFO: Uploaded new database artifact: $ST_MOODLE_DATA_WEB_ARTIFACT_FILE"
 	
+	rm $ARTIFACTS_DIR$ST_MOODLE_DB_ARTIFACT_FILE
+	echo "INFO: Removed $ST_MOODLE_DB_ARTIFACT_FILE installer file from deployment location $ARTIFACTS_DIR."
+		
 	echo "-----------------------------------------------------------------------------------------"
 	echo "                          moodle database deployment completed!                          "
 	echo "-----------------------------------------------------------------------------------------"	
