@@ -107,12 +107,42 @@ rm -rf deploy
 mkdir deploy 
 cd /opt/apps/deploy/
 
-wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
-wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
-wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
+if [[ ${DEPLOYMENT_TYPE} == "moodle & moodledata" ]]
+	then
+		echo "moodle and moodledata"
+		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
+		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
+		#transferArtifacts
+elif [[ ${DEPLOYMENT_TYPE} == "moodledb" ]]
+	then
+		echo "moodledb"
+		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
+		#transferArtifacts
+elif [[ ${DEPLOYMENT_TYPE} == "moodle" ]]
+	then
+		echo "moodle"
+		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
+		#transferArtifacts
+elif [[ ${DEPLOYMENT_TYPE} == "moodledata" ]]
+	then
+		echo "moodledata"
+		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
+		#transferArtifacts
+elif [[ ${DEPLOYMENT_TYPE} == "all" ]]
+	then
+		echo "all"
+		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
+		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
+		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
+		#transferArtifacts
+else
+	echo "ERROR: Inalid deployment type, terminating deployment."
+	exit 1
+fi
 
-echo ${ENVIRONMENT_HOST}
+function transferArtifacts {
+	echo ${ENVIRONMENT_HOST}
 
-scp -i /var/lib/jenkins/.ssh/deploy_rsa -r /opt/apps/deploy ubuntu@${ENVIRONMENT_HOST}:/opt/apps
-
+	scp -i /var/lib/jenkins/.ssh/deploy_rsa -r /opt/apps/deploy ubuntu@${ENVIRONMENT_HOST}:/opt/apps
+}
 	

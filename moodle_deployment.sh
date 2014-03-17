@@ -25,21 +25,43 @@ ST_NEW_MOODLE_DATA_LOC=/var
 
 ARTIFACTS_DIR=/opt/apps/deploy/
 
-
-
 echo "*****************************************************************************************"
 echo "                           Deploying Knodemy Moodle ...                                 "
 echo "*****************************************************************************************"
 
 echo "******************* Deployment type:  $DEPLOYMENT_TYPE ********************************"
 
-deployMoodle
-deployMoodledata
+ if [ $DEPLOYMENT_TYPE == "moodle & moodledata" ]
+	then
+		echo "moodle and moodledata"
+		#deployMoodle
+		#deployMoodledata
+elif [ $DEPLOYMENT_TYPE == "moodledb" ]
+	then
+		echo "moodledb"
+		#deployMoodledb
+elif [ $DEPLOYMENT_TYPE == "moodle" ]
+	then
+		echo "moodle"
+		#deployMoodle
+elif [ $DEPLOYMENT_TYPE == "moodledata" ]
+	then
+		echo "moodledata"
+		#deployMoodledata
+elif [ $DEPLOYMENT_TYPE == "all" ]
+	then
+		echo "all"
+		#deployMoodle
+		#deployMoodledata
+		#deployMoodledb
+else
+	echo "ERROR: Inalid deployment type, terminating deployment."
+	exit 1
+fi
 
 echo "*****************************************************************************************"
 echo "                 Knodemy deployment Completed successfully                              "
 echo "*****************************************************************************************"
-
 
 
 # function for granting privileges to moodle code directory
@@ -98,7 +120,7 @@ function deployMoodle {
 		# grant access to moodle directory
 		grantAccessToMoodle
 		echo "INFO: Restored previous release code successfully"
-	        exit 1
+	    exit 1
 	fi
 	
 	cp ${ST_MOODLE_WEB_ARTIFACT_FILE} ${ST_NEW_MOODLE_LOC}
