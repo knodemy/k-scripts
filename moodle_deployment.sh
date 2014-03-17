@@ -26,36 +26,31 @@ ST_NEW_MOODLE_DATA_LOC=/var
 ARTIFACTS_DIR=/opt/apps/deploy/
 
 echo "*****************************************************************************************"
-echo "                           Deploying Knodemy Moodle ...                                 "
+echo "                           Deploying Knodemy Moodle ...                                  "
 echo "*****************************************************************************************"
 
-echo "******************* Deployment type:  $DEPLOYMENT_TYPE ********************************"
+echo "###################### Deployment type:  $DEPLOYMENT_TYPE ################################"
 
- if [ $DEPLOYMENT_TYPE == "moodle & moodledata" ]
+ if [ $DEPLOYMENT_TYPE == "moodle_moodledata" ]
 	then
-		echo "moodle and moodledata"
-		#deployMoodle
-		#deployMoodledata
+		deployMoodle
+		deployMoodledata
 elif [ $DEPLOYMENT_TYPE == "moodledb" ]
 	then
-		echo "moodledb"
-		#deployMoodledb
+		deployMoodledb
 elif [ $DEPLOYMENT_TYPE == "moodle" ]
 	then
-		echo "moodle"
-		#deployMoodle
+		deployMoodle
 elif [ $DEPLOYMENT_TYPE == "moodledata" ]
 	then
-		echo "moodledata"
-		#deployMoodledata
+		deployMoodledata
 elif [ $DEPLOYMENT_TYPE == "all" ]
 	then
-		echo "all"
-		#deployMoodle
-		#deployMoodledata
-		#deployMoodledb
+		deployMoodle
+		deployMoodledata
+		deployMoodledb
 else
-	echo "ERROR: Inalid deployment type, terminating deployment."
+	echo "ERROR: Invalid artifact deployment type specified, terminating deployment."
 	exit 1
 fi
 

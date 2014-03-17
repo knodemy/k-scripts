@@ -15,7 +15,7 @@ if [[ ${DEPLOYMENT_SOURCE} == "Direct URLs" ]]
 	then
 	if [[ ${MOODLE_ARTIFACT_URL} == "" ]] || [[ ${MOODLE_DATA_ARTIFACT_URL} == "" ]] || [[ ${MOODLE_DB_ARTIFACT_URL} == "" ]] 
 		then
-		echo "Please verify artifacts download URLs"
+		echo "ERROR: Please verify artifacts download URLs"
 		exit 11
 	fi
 
@@ -37,7 +37,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 			then
 			MOODLE_BUILD_ID=${MOODLE_ARTIFACT_JOB_BUILD}
 		else
-			echo "Build is BAD"
+			echo "ERROR: Build is BAD"
 			exit 13
 		fi
 	fi
@@ -54,7 +54,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 			then
 			MOODLE_DATA_BUILD_ID=${MOODLE_DATA_ARTIFACT_JOB_BUILD}
 		else
-			echo "Build is BAD"
+			echo "ERROR: Build is BAD"
 			exit 13
 		fi
 	fi
@@ -72,7 +72,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 			then
 			MOODLE_DB_BUILD_ID=${MOODLE_DB_JOB_BUILD}
 		else
-			echo "Build is BAD"
+			echo "ERROR: Build is BAD"
 			exit 13
 		fi
 	fi
@@ -81,7 +81,7 @@ elif [[ ${DEPLOYMENT_SOURCE} == "Jenkins Jobs" ]]
 	MOODLE_DB_ARTIFACT_URL=`egrep -a -e "^Uploading: http://(.*)/k-moodle-db-(.*).zip" ${MOODLE_DB_BUILD_ID_OUT} | awk '{ print $2 };'`
 	
 else
-	echo "Unknown artifacts deployment source specified"
+	echo "ERROR: Unknown artifacts deployment source specified"
 	exit 12
 
 fi	
@@ -90,15 +90,15 @@ MOODLE_ARTIFACT_URL_ESC=`echo ${MOODLE_ARTIFACT_URL} | sed -e 's,\/,\\\/,g' -e '
 MOODLE_DATA_ARTIFACT_URL_ESC=`echo ${MOODLE_DATA_ARTIFACT_URL} | sed -e 's,\/,\\\/,g' -e 's,\&,\\\&,g'`
 MOODLE_DB_ARTIFACT_URL_ESC=`echo ${MOODLE_DB_ARTIFACT_URL} | sed -e 's,\/,\\\/,g' -e 's,\&,\\\&,g'`
 
-echo "Verifying URLs"
+echo "INFO: Verifying URLs"
 
 MOODLE_CURL_TMP='mktemp'
 curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
-{ grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "MOODLE_ARTIFACT_URL is invalid"; exit 13; }
+{ grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "ERROR: MOODLE_ARTIFACT_URL is invalid"; exit 13; }
 curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
-{ grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "MOODLE_DATA_ARTIFACT_URL is invalid"; exit 13; }
+{ grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "ERROR: MOODLE_DATA_ARTIFACT_URL is invalid"; exit 13; }
 curl -s -L -I -u stdeploy:stdeploy123 "${MOODLE_DB_ARTIFACT_URL}" > ${MOODLE_CURL_TMP}
-{ grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "MOODLE_DB_ARTIFACT_URL is invalid"; exit 13; }
+{ grep -q "1.1 200 OK" ${MOODLE_CURL_TMP}; } || { echo "ERROR: MOODLE_DB_ARTIFACT_URL is invalid"; exit 13; }
 
 rm -f ${MOODLE_CURL_TMP} ${MOODLE_DB_BUILD_ID_OUT} ${MOODLE_DATA_BUILD_ID_OUT} ${MOODLE_BUILD_ID_OUT}
 
@@ -107,41 +107,36 @@ rm -rf deploy
 mkdir deploy 
 cd /opt/apps/deploy/
 
-if [[ ${DEPLOYMENT_TYPE} == "moodle & moodledata" ]]
+if [[ ${DEPLOYMENT_TYPE} == "moodle_moodledata" ]]
 	then
-		echo "moodle and moodledata"
-		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
-		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
-		#transferArtifacts
+		wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
+		wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
+		transferArtifacts
 elif [[ ${DEPLOYMENT_TYPE} == "moodledb" ]]
 	then
-		echo "moodledb"
-		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
-		#transferArtifacts
+		wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
+		transferArtifacts
 elif [[ ${DEPLOYMENT_TYPE} == "moodle" ]]
 	then
-		echo "moodle"
-		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
-		#transferArtifacts
+		wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
+		transferArtifacts
 elif [[ ${DEPLOYMENT_TYPE} == "moodledata" ]]
 	then
-		echo "moodledata"
-		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
-		#transferArtifacts
+		wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
+		transferArtifacts
 elif [[ ${DEPLOYMENT_TYPE} == "all" ]]
 	then
-		echo "all"
-		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
-		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
-		#wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
-		#transferArtifacts
+		wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_ARTIFACT_URL}"
+		wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DATA_ARTIFACT_URL}"
+		wget --content-disposition --http-user=stdeploy --http-passwd=stdeploy123 "${MOODLE_DB_ARTIFACT_URL}"
+		transferArtifacts
 else
-	echo "ERROR: Inalid deployment type, terminating deployment."
+	echo "ERROR: Invalid artifact deployment type specified, terminating deployment."
 	exit 1
 fi
 
 function transferArtifacts {
-	echo ${ENVIRONMENT_HOST}
+	echo "INFO: environment host to transfer files : ${ENVIRONMENT_HOST}"
 
 	scp -i /var/lib/jenkins/.ssh/deploy_rsa -r /opt/apps/deploy ubuntu@${ENVIRONMENT_HOST}:/opt/apps
 }
