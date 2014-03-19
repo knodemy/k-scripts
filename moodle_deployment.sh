@@ -183,7 +183,7 @@ function deployMoodledb {
 	    exit 1
 	fi
 	
-	unzip ST_MOODLE_DB_ARTIFACT_FILE
+	unzip ${ST_MOODLE_DB_ARTIFACT_FILE}
 	echo "INFO: Uploading new database - in progress..."
 	mysql -v -u root -proot moodle < st-moodle-db-schema.sql
 	echo "INFO: Uploaded new database artifact: $ST_MOODLE_DATA_WEB_ARTIFACT_FILE"
