@@ -25,40 +25,6 @@ ST_NEW_MOODLE_DATA_LOC=/var
 
 ARTIFACTS_DIR=/opt/apps/deploy/
 
-echo "*****************************************************************************************"
-echo "                           Deploying Knodemy Moodle ...                                  "
-echo "*****************************************************************************************"
-
-echo "###################### Deployment type:  $DEPLOYMENT_TYPE ################################"
-
- if [ $DEPLOYMENT_TYPE == "moodle_moodledata" ]
-	then
-		deployMoodle
-		deployMoodledata
-elif [ $DEPLOYMENT_TYPE == "moodledb" ]
-	then
-		deployMoodledb
-elif [ $DEPLOYMENT_TYPE == "moodle" ]
-	then
-		deployMoodle
-elif [ $DEPLOYMENT_TYPE == "moodledata" ]
-	then
-		deployMoodledata
-elif [ $DEPLOYMENT_TYPE == "all" ]
-	then
-		deployMoodle
-		deployMoodledata
-		deployMoodledb
-else
-	echo "ERROR: Invalid artifact deployment type specified, terminating deployment."
-	exit 1
-fi
-
-echo "*****************************************************************************************"
-echo "                 Knodemy deployment Completed successfully                              "
-echo "*****************************************************************************************"
-
-
 # function for granting privileges to moodle code directory
 function grantAccessToMoodle {
 	echo "INFO: Granting privileges to moodle"
@@ -229,3 +195,36 @@ function deployMoodledb {
 	echo "                          moodle database deployment completed!                          "
 	echo "-----------------------------------------------------------------------------------------"	
 }
+
+echo "*****************************************************************************************"
+echo "                           Deploying Knodemy Moodle ...                                  "
+echo "*****************************************************************************************"
+
+echo "###################### Deployment type:  $DEPLOYMENT_TYPE ################################"
+
+ if [ $DEPLOYMENT_TYPE == "moodle_moodledata" ]
+	then
+		deployMoodle
+		deployMoodledata
+elif [ $DEPLOYMENT_TYPE == "moodledb" ]
+	then
+		deployMoodledb
+elif [ $DEPLOYMENT_TYPE == "moodle" ]
+	then
+		deployMoodle
+elif [ $DEPLOYMENT_TYPE == "moodledata" ]
+	then
+		deployMoodledata
+elif [ $DEPLOYMENT_TYPE == "all" ]
+	then
+		deployMoodle
+		deployMoodledata
+		deployMoodledb
+else
+	echo "ERROR: Invalid artifact deployment type specified, terminating deployment."
+	exit 1
+fi
+
+echo "*****************************************************************************************"
+echo "                 Knodemy deployment Completed successfully                               "
+echo "*****************************************************************************************"
