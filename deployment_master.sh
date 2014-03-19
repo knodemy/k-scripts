@@ -11,6 +11,12 @@
 # 
 #/*  ################################################################################-   */
 
+function transferArtifacts {
+	echo "INFO: environment host to transfer files : ${ENVIRONMENT_HOST}"
+
+	scp -i /var/lib/jenkins/.ssh/deploy_rsa -r /opt/apps/deploy ubuntu@${ENVIRONMENT_HOST}:/opt/apps
+}
+
 if [[ ${DEPLOYMENT_SOURCE} == "Direct URLs" ]]
 	then
 	if [[ ${MOODLE_ARTIFACT_URL} == "" ]] || [[ ${MOODLE_DATA_ARTIFACT_URL} == "" ]] || [[ ${MOODLE_DB_ARTIFACT_URL} == "" ]] 
@@ -134,10 +140,4 @@ else
 	echo "ERROR: Invalid artifact deployment type specified, terminating deployment."
 	exit 1
 fi
-
-function transferArtifacts {
-	echo "INFO: environment host to transfer files : ${ENVIRONMENT_HOST}"
-
-	scp -i /var/lib/jenkins/.ssh/deploy_rsa -r /opt/apps/deploy ubuntu@${ENVIRONMENT_HOST}:/opt/apps
-}
 	
