@@ -226,6 +226,13 @@ else
 	exit 1
 fi
 
+
+echo "*************************** Initiated Purge Cache **********************************"
+cd $ST_MOODLE_LOC
+php admin/cli/purge_caches.php
+echo "***************** Purge Cache Completed successfully *******************************"
+
+
 echo "*****************************************************************************************"
 echo "                 Knodemy deployment Completed successfully                               "
 echo "*****************************************************************************************"
