@@ -13,6 +13,7 @@
 
 
 # Declare variables
+export TERM=dumb
 
 HOST=$1
 DEPLOYMENT_TYPE=$2
@@ -226,12 +227,20 @@ else
 	exit 1
 fi
 
+#echo "INFO: Uploading new database - in progress..."
+#mysql –u root -proot -D moodle -A -e "set @old_host='abc'; set @new_host='xyz'; source k-moodledb_footer_dml.sql;"
+#echo "INFO: Uploaded new database artifact:
+
 
 echo "*************************** Initiated Purge Cache **********************************"
 cd $ST_MOODLE_LOC
 php admin/cli/purge_caches.php
 echo "***************** Purge Cache Completed successfully *******************************"
 
+echo "*************************** Initiated Cron Job **********************************"
+cd $ST_MOODLE_LOC
+php admin/cli/cron.php
+echo "***************** Cron job Completed successfully *******************************"
 
 echo "*****************************************************************************************"
 echo "                 Knodemy deployment Completed successfully                               "
