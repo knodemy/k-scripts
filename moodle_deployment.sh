@@ -31,6 +31,7 @@ function grantAccessToMoodle {
 	echo "INFO: Granting privileges to moodle"
 	sudo chown -R root:root ${ST_MOODLE_LOC}
 	sudo chmod -R 0755 ${ST_MOODLE_LOC}
+	sudo chmod ​775 -​­R ${ST_MOODLE_LOC}/meet_our_counselor/uploads
 	echo "INFO: All required privileges granted to moodle"
 }
 
